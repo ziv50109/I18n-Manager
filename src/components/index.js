@@ -5,3 +5,4 @@ export * from './Footer';
 export * from './Dropdown';
 export * from './Terms';
 export * from './Term';
+export * from './CustomEditable';
