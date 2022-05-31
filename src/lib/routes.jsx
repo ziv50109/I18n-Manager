@@ -8,8 +8,10 @@ import { values } from 'lodash';
 import {
   Layout,
   Home,
+  Manage,
   Signin,
   Signup,
+  NoMatch,
 } from '@/pages';
 
 const RequireAuth = ({ children }) => {
@@ -30,6 +32,11 @@ export const features = {
     name: 'home',
     element: <RequireAuth><Home /></RequireAuth>,
   },
+  manage: {
+    path: '/manage',
+    name: 'manage',
+    element: <RequireAuth><Manage /></RequireAuth>,
+  },
 };
 
 export const routes = [
@@ -48,6 +55,7 @@ export const routes = [
         name: 'signup',
         element: <Signup />,
       },
+      { path: '*', name: '404', element: <NoMatch /> },
     ],
   },
 ];
