@@ -37,6 +37,7 @@ export const SigninForm = ({ onSubmit }) => {
                 <Input
                   id="email"
                   placeholder="Email Address"
+                  defaultValue="test@i18n.editor"
                   {...register('email', {
                     required: 'Email is required',
                   })}
@@ -51,6 +52,7 @@ export const SigninForm = ({ onSubmit }) => {
                   id="password"
                   type="password"
                   placeholder="Password"
+                  defaultValue="1234qwer"
                   {...register('password', {
                     required: 'Password is required',
                   })}
