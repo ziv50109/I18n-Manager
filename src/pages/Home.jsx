@@ -18,7 +18,7 @@ import {
   SimpleGrid,
   Checkbox,
 } from '@chakra-ui/react';
-import { Dropdown } from '@/components';
+import { Dropdown, Terms } from '@/components';
 
 export const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -120,6 +120,8 @@ export const Home = () => {
           renderMenuHeader={renderMenuHeader}
         />
       </SimpleGrid>
+
+      <Terms terms={filterTerms} />
 
       <Outlet />
     </Box>
