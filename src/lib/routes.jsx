@@ -2,7 +2,7 @@ import { values } from 'lodash';
 import {
   Layout,
   Home,
- } from '@/pages';
+} from '@/pages';
 
 export const features = {
   home: {
