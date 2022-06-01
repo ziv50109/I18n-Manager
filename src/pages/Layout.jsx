@@ -27,6 +27,20 @@ export const Layout = () => {
       minH="100vh"
       templateRows="auto 1fr auto"
       templateColumns="100%"
+      css={{
+        '& *::-webkit-scrollbar': {
+          width: 5,
+        },
+        '& *::-webkit-scrollbar-track': {
+          backgroundColor: '#ced3db',
+        },
+        '& *::-webkit-scrollbar-thumb': {
+          backgroundColor: '#718096',
+        },
+        '& *::-webkit-scrollbar-thumb:hover': {
+          backgroundColor: '#617086',
+        },
+      }}
     >
       <GridItem pos="sticky" top={0} zIndex={1}>
         <Header

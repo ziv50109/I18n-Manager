@@ -1,31 +1,49 @@
-import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { AuthContext } from '@/store';
 import { difference } from 'lodash';
 import {
   VStack,
+  useToast,
 } from '@chakra-ui/react';
 import { Term } from '@/components';
-import { updateNamespace } from '@/api';
+import { updateNamespaces, removeNamespace } from '@/api';
 
 export const Terms = ({
   terms,
 }) => {
-  const { user } = useContext(AuthContext);
+  const toast = useToast();
 
-  const onUpdateTerm = (id) => (newTerm, currentTerm) => {
-    console.log('update translate:', id, currentTerm, '->', newTerm);
+  const showToast = (response) => (
+    response.isSuccess
+      ? toast({
+        title: 'Success!',
+        status: 'success',
+        variant: 'subtle',
+        isClosable: true,
+      })
+      : toast({
+        title: response.error.message,
+        status: 'error',
+        variant: 'subtle',
+        isClosable: true,
+      })
+  );
+
+  const onUpdateTerm = (termId) => (newTerm, currentTerm) => {
+    console.log('update translate:', termId, currentTerm, '->', newTerm);
   };
-  const onUpdateTranslate = (id) => (lang, newValue, currentValue) => {
-    console.log('update translate:', id, lang, currentValue, '->', newValue);
+  const onUpdateTranslate = (termId) => (lang, newValue, currentValue) => {
+    console.log('update translate:', termId, lang, currentValue, '->', newValue);
   };
-  const onRemoveNamespace = (id) => (namespace) => {
-    console.log('remove namespace:', user.uid, id, namespace);
+  const onRemoveNamespace = (termId) => async (namespace) => {
+    const res = await removeNamespace({ namespace, termIds: [termId] });
+    showToast(res);
   };
-  const onUpdateNamespaces = (id) => (newNamespaces, currentNamespace) => {
+  const onUpdateNamespaces = (termId) => async (newNamespaces, currentNamespace) => {
     const append = difference(newNamespaces, currentNamespace);
     const remove = difference(currentNamespace, newNamespaces);
-    console.log('update namespaces:', user.uid, id, 'append', append, 'remove', remove);
+
+    const res = await updateNamespaces({ append, remove, termId });
+    showToast(res);
   };
 
   return (

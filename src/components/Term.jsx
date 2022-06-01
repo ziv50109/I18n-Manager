@@ -72,7 +72,7 @@ const NamespacesSection = ({
 
   const handleRemoveNamespace = (namespace) => () => onRemoveNamespace(namespace);
   const handleUpdateNamespaces = () => {
-    onUpdateNamespaces(selectedNamespace, namespaces)
+    onUpdateNamespaces(selectedNamespace, namespaces);
   };
 
   const onClose = () => {
@@ -121,13 +121,13 @@ const NamespacesSection = ({
         <Dropdown
           closeOnSelect
           list={namespaceList}
-          value={selectedNamespace}
+          defaultValue={selectedNamespace}
           onChange={setSelectedNamespace}
           onClose={onClose}
           renderMenuButton={renderMenuButton}
           renderMenuFooter={renderMenuFooter}
           menuItemProps={{
-            closeOnSelect: false
+            closeOnSelect: false,
           }}
         />
       </HStack>

@@ -65,7 +65,7 @@ export const Home = () => {
 
   const onNamespaceChange = (newNamespaces) => onUpdateParams('namespace', newNamespaces.join(','));
   const onSearchChange = (event) => onUpdateParams('search', event.target.value);
-  const onPartialMatchChange = (event) => onUpdateParams('partialMatch', event.target.checked);
+  const onPartialMatchChange = (event) => onUpdateParams('partialMatch', String(event.target.checked));
 
   const filterSearch = (term) => {
     if (!searchDefaultValue?.length) return true;
