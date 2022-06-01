@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   Input,
   HStack,
@@ -49,9 +50,9 @@ const EditableControls = ({
 };
 
 export const CustomEditable = ({
-  renderEditButton = noop,
-  renderCheckButton = noop,
-  inputProps = {},
+  renderEditButton,
+  renderCheckButton,
+  inputProps,
   ...others
 }) => {
   const EditableControlsProps = {
@@ -71,4 +72,19 @@ export const CustomEditable = ({
       </HStack>
     </Editable>
   );
+};
+CustomEditable.propTypes = {
+  renderEditButton: PropTypes.func,
+  renderCheckButton: PropTypes.func,
+  inputProps: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.object,
+    PropTypes.bool,
+  ])),
+};
+CustomEditable.defaultProps = {
+  renderEditButton: noop,
+  renderCheckButton: noop,
+  inputProps: {},
 };

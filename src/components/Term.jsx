@@ -1,4 +1,5 @@
 import { memo, useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import { DatabaseContext } from '@/store';
 import {
   toPairs,
@@ -49,11 +50,20 @@ const TermEditable = ({ defaultValue, ...others }) => {
     />
   );
 };
+TermEditable.propTypes = {
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+};
+TermEditable.defaultProps = {
+  defaultValue: '',
+};
 
 const NamespacesSection = ({
-  namespaces = [],
-  onRemoveNamespace = noop,
-  onUpdateNamespaces = noop,
+  namespaces,
+  onRemoveNamespace,
+  onUpdateNamespaces,
 }) => {
   const database = useContext(DatabaseContext);
   const namespaceList = keys(database.namespaces);
@@ -102,7 +112,7 @@ const NamespacesSection = ({
         <Button onClick={handleUpdateNamespaces}>Save</Button>
       </ButtonGroup>
     </StickyItem>
-  )
+  );
 
   return (
     <Box>
@@ -127,13 +137,22 @@ const NamespacesSection = ({
     </Box>
   );
 };
+NamespacesSection.propTypes = {
+  namespaces: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onRemoveNamespace: PropTypes.func,
+  onUpdateNamespaces: PropTypes.func,
+};
+NamespacesSection.defaultProps = {
+  onRemoveNamespace: noop,
+  onUpdateNamespaces: noop,
+};
 
 export const Term = memo(({
-  term = {},
-  onUpdateTerm = noop,
-  onUpdateTranslate = noop,
-  onRemoveNamespace = noop,
-  onUpdateNamespaces = noop,
+  term,
+  onUpdateTerm,
+  onUpdateTranslate,
+  onRemoveNamespace,
+  onUpdateNamespaces,
 }) => {
   const handleUpdateKey = (currentTerm) => (newTerm) => onUpdateTerm(newTerm, currentTerm);
   const handleUpdateTerm = (lang, currValue) => (newValue) => onUpdateTranslate(lang, newValue, currValue);
@@ -178,3 +197,21 @@ export const Term = memo(({
     </Box>
   );
 }, areEqual);
+Term.propTypes = {
+  term: PropTypes.shape({
+    id: PropTypes.string,
+    key: PropTypes.string,
+    namespaces: PropTypes.arrayOf(PropTypes.string),
+    translates: PropTypes.objectOf(PropTypes.string),
+  }).isRequired,
+  onUpdateTerm: PropTypes.func,
+  onUpdateTranslate: PropTypes.func,
+  onRemoveNamespace: PropTypes.func,
+  onUpdateNamespaces: PropTypes.func,
+};
+Term.defaultProps = {
+  onUpdateTerm: noop,
+  onUpdateTranslate: noop,
+  onRemoveNamespace: noop,
+  onUpdateNamespaces: noop,
+};

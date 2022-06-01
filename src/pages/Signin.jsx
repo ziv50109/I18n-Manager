@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { AuthContext } from '@/store/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { signinWithEmail } from '@/api/auth';
-import { SigninForm } from '@/components';
+import { SigninForm } from '@/components/SigninForm';
 
 export const Signin = () => {
   const navigate = useNavigate();

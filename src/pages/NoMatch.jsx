@@ -21,7 +21,7 @@ export const NoMatch = () => (
       Page Not Found
     </Text>
     <Text color="gray.500" mb={6}>
-      The page you're looking for does not seem to exist
+      The page you&apos;re looking for does not seem to exist
     </Text>
 
     <Link to="/">

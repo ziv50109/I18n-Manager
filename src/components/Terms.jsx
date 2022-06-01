@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { AuthContext } from '@/store';
 import { difference } from 'lodash';
 import {
@@ -8,7 +9,7 @@ import { Term } from '@/components';
 import { updateNamespace } from '@/api';
 
 export const Terms = ({
-  terms = [],
+  terms,
 }) => {
   const { user } = useContext(AuthContext);
 
@@ -41,4 +42,12 @@ export const Terms = ({
       ))}
     </VStack>
   );
+};
+Terms.propTypes = {
+  terms: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    key: PropTypes.string,
+    namespaces: PropTypes.arrayOf(PropTypes.string),
+    translates: PropTypes.objectOf(PropTypes.string),
+  })).isRequired,
 };

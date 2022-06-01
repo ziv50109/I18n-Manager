@@ -3,7 +3,9 @@ import {
   useState,
   useEffect,
   useContext,
+  useMemo,
 } from 'react';
+import PropTypes from 'prop-types';
 import { AuthContext } from '@/store/AuthContext';
 import { ref, onValue } from 'firebase/database';
 import { database } from '@/lib/firebase';
@@ -31,11 +33,14 @@ export const DatabaseProvider = ({ children }) => {
     }
   }, [user.uid]);
 
-  const initialValue = { ...dataset };
+  const initialValue = useMemo(() => ({ ...dataset }), [dataset]);
 
   return (
     <DatabaseContext.Provider value={initialValue}>
       {children}
     </DatabaseContext.Provider>
   );
+};
+DatabaseProvider.propTypes = {
+  children: PropTypes.element.isRequired,
 };

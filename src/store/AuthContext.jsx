@@ -1,4 +1,10 @@
-import { createContext, useState, useEffect } from 'react';
+import {
+  createContext,
+  useState,
+  useEffect,
+  useMemo,
+} from 'react';
+import PropTypes from 'prop-types';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { app } from '@/lib/firebase';
 
@@ -37,16 +43,19 @@ export const AuthProvider = ({ children }) => {
     callback();
   };
 
-  const defaultValue = {
+  const defaultValue = useMemo(() => ({
     user,
     isLoading,
     signin,
     signout,
-  };
+  }), [user, isLoading]);
 
   return (
     <AuthContext.Provider value={defaultValue}>
       {children}
     </AuthContext.Provider>
   );
+};
+AuthProvider.propTypes = {
+  children: PropTypes.element.isRequired,
 };

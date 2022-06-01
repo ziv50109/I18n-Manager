@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import {
   Container,
@@ -13,6 +14,8 @@ import {
   Checkbox,
   Link,
 } from '@chakra-ui/react';
+
+const noop = () => {};
 
 export const SigninForm = ({ onSubmit }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -87,4 +90,10 @@ export const SigninForm = ({ onSubmit }) => {
       </Center>
     </Container>
   );
+};
+SigninForm.propTypes = {
+  onSubmit: PropTypes.func,
+};
+SigninForm.defaultProps = {
+  onSubmit: noop,
 };

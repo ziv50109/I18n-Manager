@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { omitBy, values, isEmpty } from 'lodash';
 import {
   CheckboxGroup,
@@ -15,14 +16,21 @@ import {
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
+const objectPropTypes = PropTypes.objectOf(PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.number,
+  PropTypes.object,
+  PropTypes.bool,
+]));
+
 const noop = () => {};
 
 const DropdownMenuButton = ({
-  list = [],
-  label = '',
-  omitEmptyValue = [],
-  renderMenuButton = noop,
-  menuButtonProps = {},
+  label,
+  list,
+  omitEmptyValue,
+  renderMenuButton,
+  menuButtonProps,
 }) => {
   const selectedValue = values(omitEmptyValue).flat() ?? [];
 
@@ -62,15 +70,32 @@ const DropdownMenuButton = ({
     </MenuButton>
   );
 };
+DropdownMenuButton.propTypes = {
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]),
+  list: PropTypes.arrayOf(PropTypes.string).isRequired,
+  omitEmptyValue: PropTypes.shape({
+    value: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+  renderMenuButton: PropTypes.func,
+  menuButtonProps: objectPropTypes,
+};
+DropdownMenuButton.defaultProps = {
+  label: '',
+  renderMenuButton: noop,
+  menuButtonProps: {},
+};
 const DropdownMenuList = ({
-  list = [],
-  omitEmptyValue = [],
-  onChange = noop,
-  renderMenuItem = noop,
-  renderMenuHeader = noop,
-  renderMenuFooter = noop,
-  menuListProps = {},
-  menuItemProps = {},
+  list,
+  omitEmptyValue,
+  onChange,
+  renderMenuItem,
+  renderMenuHeader,
+  renderMenuFooter,
+  menuListProps,
+  menuItemProps,
 }) => {
   const DefaultMenuItem = (props) => (
     <MenuItem
@@ -140,20 +165,40 @@ const DropdownMenuList = ({
     </MenuList>
   );
 };
+DropdownMenuList.propTypes = {
+  list: PropTypes.arrayOf(PropTypes.string).isRequired,
+  omitEmptyValue: PropTypes.shape({
+    value: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+  onChange: PropTypes.func,
+  renderMenuItem: PropTypes.func,
+  renderMenuHeader: PropTypes.func,
+  renderMenuFooter: PropTypes.func,
+  menuListProps: objectPropTypes,
+  menuItemProps: objectPropTypes,
+};
+DropdownMenuList.defaultProps = {
+  onChange: noop,
+  renderMenuItem: noop,
+  renderMenuHeader: noop,
+  renderMenuFooter: noop,
+  menuListProps: {},
+  menuItemProps: {},
+};
 
 export const Dropdown = ({
-  label = '',
-  list = [],
-  value = null,
-  defaultValue = null,
-  onChange = noop,
-  renderMenuButton = noop,
-  renderMenuItem = noop,
-  renderMenuHeader = noop,
-  renderMenuFooter = noop,
-  menuButtonProps = {},
-  menuListProps = {},
-  menuItemProps = {},
+  label,
+  list,
+  value,
+  defaultValue,
+  onChange,
+  renderMenuButton,
+  renderMenuItem,
+  renderMenuHeader,
+  renderMenuFooter,
+  menuButtonProps,
+  menuListProps,
+  menuItemProps,
   ...others
 }) => {
   const omitEmptyValue = omitBy({ value, defaultValue }, isEmpty);
@@ -182,4 +227,34 @@ export const Dropdown = ({
       <DropdownMenuList {...DropdownMenuListProps} />
     </Menu>
   );
+};
+Dropdown.propTypes = {
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]),
+  list: PropTypes.arrayOf(PropTypes.string).isRequired,
+  value: PropTypes.arrayOf(PropTypes.string),
+  defaultValue: PropTypes.arrayOf(PropTypes.string),
+  onChange: PropTypes.func,
+  renderMenuButton: PropTypes.func,
+  renderMenuItem: PropTypes.func,
+  renderMenuHeader: PropTypes.func,
+  renderMenuFooter: PropTypes.func,
+  menuButtonProps: objectPropTypes,
+  menuListProps: objectPropTypes,
+  menuItemProps: objectPropTypes,
+};
+Dropdown.defaultProps = {
+  label: '',
+  value: null,
+  defaultValue: null,
+  onChange: noop,
+  renderMenuButton: noop,
+  renderMenuItem: noop,
+  renderMenuHeader: noop,
+  renderMenuFooter: noop,
+  menuButtonProps: {},
+  menuListProps: {},
+  menuItemProps: {},
 };

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { values } from 'lodash';
 import {
@@ -44,8 +45,8 @@ const StyledNavLink = ({ to, ...others }) => {
   );
 };
 const UserAvatarMenu = ({
-  user = {},
-  onSignout = noop,
+  user,
+  onSignout,
 }) => {
   const name = user.displayName ?? user.email;
   const defaultAvatar = user.photoURL ?? `https://avatars.dicebear.com/api/initials/${name.charAt(0)}.svg`;
@@ -84,10 +85,19 @@ const UserAvatarMenu = ({
     </Menu>
   );
 };
+UserAvatarMenu.propTypes = {
+  user: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.any,
+  ])).isRequired,
+  onSignout: PropTypes.func,
+};
+UserAvatarMenu.defaultProps = {
+  onSignout: noop,
+};
 
 const ActionButtons = ({
-  onSignin = noop,
-  onSignup = noop,
+  onSignin,
+  onSignup,
 }) => (
   <Stack
     flex={{ base: 1, md: 0 }}
@@ -118,12 +128,20 @@ const ActionButtons = ({
     </Button>
   </Stack>
 );
+ActionButtons.propTypes = {
+  onSignin: PropTypes.func,
+  onSignup: PropTypes.func,
+};
+ActionButtons.defaultProps = {
+  onSignin: noop,
+  onSignup: noop,
+};
 
 export const Header = ({
-  user = {},
-  onSignin = noop,
-  onSignup = noop,
-  onSignout = noop,
+  user,
+  onSignin,
+  onSignup,
+  onSignout,
 }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -178,4 +196,17 @@ export const Header = ({
       </Flex>
     </Box>
   );
+};
+Header.propTypes = {
+  user: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.any,
+  ])).isRequired,
+  onSignin: PropTypes.func,
+  onSignup: PropTypes.func,
+  onSignout: PropTypes.func,
+};
+Header.defaultProps = {
+  onSignin: noop,
+  onSignup: noop,
+  onSignout: noop,
 };
