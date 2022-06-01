@@ -1,7 +1,12 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+import {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+} from 'react';
 import { AuthContext } from '@/store/AuthContext';
 import { ref, onValue } from 'firebase/database';
-import { database } from '@/lib';
+import { database } from '@/lib/firebase';
 
 const defaultDataset = {
   keys: {},

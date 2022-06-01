@@ -4,13 +4,13 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  esbuild: {
-    jsxInject: `import * as React from 'react'`,
-  },
   plugins: [react()],
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-    },
+    alias: [
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, 'src'),
+      },
+    ],
   },
 });

@@ -20,7 +20,6 @@ const EditableControls = ({
   const {
     isEditing,
     getSubmitButtonProps,
-    getCancelButtonProps,
     getEditButtonProps,
   } = useEditableControls();
 
@@ -35,7 +34,7 @@ const EditableControls = ({
     renderEditButton === noop
       ? <DefaultEditIconButton />
       : renderEditButton(DefaultEditIconButton, getEditButtonProps)
-  )
+  );
   const _renderCheckButton = () => (
     renderCheckButton === noop
       ? <DefaultCheckIconButton />
@@ -71,5 +70,5 @@ export const CustomEditable = ({
         <EditableControls {...EditableControlsProps} />
       </HStack>
     </Editable>
-  )
+  );
 };

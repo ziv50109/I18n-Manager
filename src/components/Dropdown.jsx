@@ -12,7 +12,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  Box,
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
@@ -57,7 +56,6 @@ const DropdownMenuButton = ({
       : renderMenuButton()
   );
 
-
   return (
     <MenuButton {...menuButtonProps}>
       {_renderMenuButton()}
@@ -97,19 +95,19 @@ const DropdownMenuList = ({
     renderMenuHeader === noop
       ? null
       : renderMenuHeader(DefaultStickyItem({
-          top: 0,
-          borderBottom: '1px solid',
-          borderColor: 'gray.200',
-        }))
+        top: 0,
+        borderBottom: '1px solid',
+        borderColor: 'gray.200',
+      }))
   );
   const _renderMenuFooter = () => (
     renderMenuFooter === noop
       ? null
       : renderMenuFooter(DefaultStickyItem({
-          bottom: 0,
-          borderTop: '1px solid',
-          borderColor: 'gray.200',
-        }))
+        bottom: 0,
+        borderTop: '1px solid',
+        borderColor: 'gray.200',
+      }))
   );
 
   const _renderMenuItem = (item) => (
@@ -122,7 +120,6 @@ const DropdownMenuList = ({
       : renderMenuItem(item, DefaultMenuItem)
   );
 
-
   const lists = useMemo(() => list.map(_renderMenuItem), ['list']);
   return (
     <MenuList
@@ -130,7 +127,7 @@ const DropdownMenuList = ({
       maxH={400}
       overflow="auto"
       {...menuListProps}
-      >
+    >
       {_renderMenuHeader()}
       <CheckboxGroup
         colorScheme="green"

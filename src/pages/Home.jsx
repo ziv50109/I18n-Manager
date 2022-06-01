@@ -56,7 +56,7 @@ export const Home = () => {
     };
     if (!value.length) delete newParams[key];
 
-    setSearchParams(newParams)
+    setSearchParams(newParams);
   };
 
   const searchDefaultValue = get(params, 'search', '');

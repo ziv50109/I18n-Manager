@@ -74,7 +74,7 @@ export const SigninForm = ({ onSubmit }) => {
                 bg="green.300"
                 color="white"
                 _hover={{
-                  bg: 'green.500'
+                  bg: 'green.500',
                 }}
                 rounded="md"
                 w="100%"

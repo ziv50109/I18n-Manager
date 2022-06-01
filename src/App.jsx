@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   BrowserRouter,
   useRoutes,
@@ -12,21 +13,19 @@ const RouterElement = () => {
   return element;
 };
 
-const App = () => {
-  return (
-    <React.StrictMode>
-      <BrowserRouter>
-        <AuthProvider>
-          <DatabaseProvider>
-            <ChakraProvider>
-              <CSSReset />
-              <RouterElement />
-            </ChakraProvider>
-          </DatabaseProvider>
-        </AuthProvider>
-      </BrowserRouter>
-    </React.StrictMode>
-  );
-};
+const App = () => (
+  <React.StrictMode>
+    <BrowserRouter>
+      <AuthProvider>
+        <DatabaseProvider>
+          <ChakraProvider>
+            <CSSReset />
+            <RouterElement />
+          </ChakraProvider>
+        </DatabaseProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  </React.StrictMode>
+);
 
-export default App
+export default App;

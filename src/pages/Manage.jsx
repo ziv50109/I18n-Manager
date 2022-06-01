@@ -1,3 +1,1 @@
-export const Manage = () => {
-  return 'Manage';
-};
+export const Manage = () => 'Manage';

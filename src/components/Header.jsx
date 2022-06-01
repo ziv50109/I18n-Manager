@@ -18,7 +18,9 @@ import {
   HStack,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { features } from '@/lib';
+import { features } from '@/lib/routes';
+
+const noop = () => {};
 
 const StyledNavLink = ({ to, ...others }) => {
   const bgColor = useColorModeValue('gray.200', 'gray.700');
@@ -43,7 +45,7 @@ const StyledNavLink = ({ to, ...others }) => {
 };
 const UserAvatarMenu = ({
   user = {},
-  onSignout,
+  onSignout = noop,
 }) => {
   const name = user.displayName ?? user.email;
   const defaultAvatar = user.photoURL ?? `https://avatars.dicebear.com/api/initials/${name.charAt(0)}.svg`;
@@ -84,8 +86,8 @@ const UserAvatarMenu = ({
 };
 
 const ActionButtons = ({
-  onSignin,
-  onSignup,
+  onSignin = noop,
+  onSignup = noop,
 }) => (
   <Stack
     flex={{ base: 1, md: 0 }}
@@ -119,13 +121,17 @@ const ActionButtons = ({
 
 export const Header = ({
   user = {},
-  onSignin,
-  onSignup,
-  onSignout,
+  onSignin = noop,
+  onSignup = noop,
+  onSignout = noop,
 }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
-  const ColorModeIcon = () => colorMode === 'light' ? <MoonIcon /> : <SunIcon />;
+  const ColorModeIcon = () => (
+    colorMode === 'light'
+      ? <MoonIcon />
+      : <SunIcon />
+  );
 
   const renderAction = () => (
     user.uid
@@ -151,13 +157,13 @@ export const Header = ({
           <HStack
             as="nav"
             spacing={4}
-            display={{ base: 'none', md: 'flex' }}>
+            display={{ base: 'none', md: 'flex' }}
+          >
             {values(features).map((link) => (
               <StyledNavLink key={link.path} to={link.path}>{link.name}</StyledNavLink>
             ))}
           </HStack>
         </HStack>
-
 
         <Flex alignItems="center">
           <Stack direction="row" spacing={7}>

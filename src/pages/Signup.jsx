@@ -1,7 +1,5 @@
 import { SignupForm } from '@/components';
 
-export const Signup = () => {
-  return (
-    <SignupForm />
-  );
-};
+export const Signup = () => (
+  <SignupForm />
+);
