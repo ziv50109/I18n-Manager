@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { omitBy, values, isEmpty } from 'lodash';
 import {
@@ -43,7 +43,7 @@ const DropdownMenuButton = ({
     return `${selectedValue.length} of ${list.length} selected`;
   };
 
-  const DefaultMenuButton = () => (
+  const renderDefaultMenuButton = useCallback(() => (
     <FormControl>
       <FormLabel>{label}</FormLabel>
       <InputGroup>
@@ -56,11 +56,11 @@ const DropdownMenuButton = ({
         </InputRightElement>
       </InputGroup>
     </FormControl>
-  );
+  ), [label, selectedValue.length]);
 
   const _renderMenuButton = () => (
     renderMenuButton === noop
-      ? <DefaultMenuButton />
+      ? renderDefaultMenuButton()
       : renderMenuButton()
   );
 
@@ -87,6 +87,13 @@ DropdownMenuButton.defaultProps = {
   renderMenuButton: noop,
   menuButtonProps: {},
 };
+const DefaultMenuItem = (props) => (
+  <MenuItem
+    as="label"
+    cursor="pointer"
+    {...props}
+  />
+);
 const DropdownMenuList = ({
   list,
   omitEmptyValue,
@@ -97,15 +104,7 @@ const DropdownMenuList = ({
   menuListProps,
   menuItemProps,
 }) => {
-  const DefaultMenuItem = (props) => (
-    <MenuItem
-      as="label"
-      cursor="pointer"
-      {...props}
-    />
-  );
-
-  const DefaultStickyItem = (defaultProps) => (props) => (
+  const DefaultStickyItem = (defaultProps) => useCallback((props) => (
     <DefaultMenuItem
       pos="sticky"
       width="100%"
@@ -115,7 +114,7 @@ const DropdownMenuList = ({
       {...defaultProps}
       {...props}
     />
-  );
+  ), []);
   const _renderMenuHeader = () => (
     renderMenuHeader === noop
       ? null
@@ -135,7 +134,7 @@ const DropdownMenuList = ({
       }))
   );
 
-  const _renderMenuItem = (item) => (
+  const _renderMenuItem = useCallback((item) => (
     renderMenuItem === noop
       ? (
         <DefaultMenuItem key={item} {...menuItemProps}>
@@ -143,7 +142,7 @@ const DropdownMenuList = ({
         </DefaultMenuItem>
       )
       : renderMenuItem(item, DefaultMenuItem)
-  );
+  ), [renderMenuItem]);
 
   const lists = useMemo(() => list.map(_renderMenuItem), ['list']);
   return (

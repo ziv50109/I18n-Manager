@@ -1,4 +1,9 @@
-import { memo, useContext, useState } from 'react';
+import {
+  memo,
+  useContext,
+  useState,
+  useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { DatabaseContext } from '@/store';
 import {
@@ -32,9 +37,9 @@ const areEqual = (prevProps, nextProps) => {
 };
 
 const TermEditable = ({ defaultValue, ...others }) => {
-  const renderEditButton = (value) => (EditIconButton) => (
-    value?.length ? <EditIconButton /> : <EditIconButton icon={<AddIcon />} />
-  );
+  const renderEditButton = (value = []) => useCallback((EditIconButton) => (
+    value.length ? <EditIconButton /> : <EditIconButton icon={<AddIcon />} />
+  ), [value.length]);
   const renderCheckButton = (CheckIconButton, getSubmitButtonProps) => (
     <Button colorScheme="teal" {...getSubmitButtonProps()}>Update</Button>
   );
@@ -155,7 +160,9 @@ export const Term = memo(({
   onUpdateNamespaces,
 }) => {
   const handleUpdateKey = (currentTerm) => (newTerm) => onUpdateTerm(newTerm, currentTerm);
-  const handleUpdateTerm = (lang, currValue) => (newValue) => onUpdateTranslate(lang, newValue, currValue);
+  const handleUpdateTerm = (lang, currValue) => (newValue) => (
+    onUpdateTranslate(lang, newValue, currValue)
+  );
 
   return (
     <Box

@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { values } from 'lodash';
@@ -145,11 +146,11 @@ export const Header = ({
 }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
-  const ColorModeIcon = () => (
+  const renderColorIcon = useCallback(() => (
     colorMode === 'light'
       ? <MoonIcon />
       : <SunIcon />
-  );
+  ), [colorMode]);
 
   const renderAction = () => (
     user.uid
@@ -188,7 +189,7 @@ export const Header = ({
             <IconButton
               rounded="full"
               onClick={toggleColorMode}
-              icon={<ColorModeIcon />}
+              icon={renderColorIcon()}
             />
             {renderAction()}
           </Stack>
