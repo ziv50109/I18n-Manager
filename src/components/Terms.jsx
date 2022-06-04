@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
-import { difference } from 'lodash';
+import { difference, isEmpty } from 'lodash';
 import {
   VStack,
   useToast,
 } from '@chakra-ui/react';
 import { Term } from '@/components';
-import { updateNamespaces, removeNamespace } from '@/api';
+import {
+  updateNamespaces,
+  removeNamespace,
+  setTerm,
+  setTranslate,
+} from '@/api';
 
 export const Terms = ({
   terms,
@@ -28,11 +33,14 @@ export const Terms = ({
       })
   );
 
-  const onUpdateTerm = (termId) => (newTerm, currentTerm) => {
-    console.log('update translate:', termId, currentTerm, '->', newTerm);
+  const onUpdateTerm = (termId) => async (_newTerm, currentTerm) => {
+    const newTerm = isEmpty(_newTerm) ? currentTerm : _newTerm;
+    const res = await setTerm({ termId, newTerm });
+    showToast(res);
   };
-  const onUpdateTranslate = (termId) => (lang, newValue, currentValue) => {
-    console.log('update translate:', termId, lang, currentValue, '->', newValue);
+  const onUpdateTranslate = (termId) => async (lang, newTerm) => {
+    const res = await setTranslate({ termId, lang, newTerm });
+    showToast(res);
   };
   const onRemoveNamespace = (termId) => async (namespace) => {
     const res = await removeNamespace({ namespace, termIds: [termId] });
